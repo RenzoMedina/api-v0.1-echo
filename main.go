@@ -14,11 +14,11 @@ func main() {
 	//storage.DB().AutoMigrate(&model.Post{})
 
 	e := echo.New()
-	e.GET("/api/v1", func(c echo.Context) error {
+	e.GET("/v1", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, post.GetAll(storage.DB()))
 	})
 
-	e.POST("/api/v1", func(c echo.Context) error {
+	e.POST("/v1", func(c echo.Context) error {
 
 		code := c.FormValue("code")
 		name := c.FormValue("name")
@@ -31,13 +31,13 @@ func main() {
 		return c.JSON(http.StatusOK, result)
 	})
 
-	e.GET("/api/v1/:id", func(c echo.Context) error {
+	e.GET("/v1/:id", func(c echo.Context) error {
 
 		id := c.Param("id")
 		return c.JSON(http.StatusOK, post.GetById(storage.DB(), id))
 	})
 
-	e.PUT("/api/v1/:id", func(c echo.Context) error {
+	e.PUT("/v1/:id", func(c echo.Context) error {
 
 		id := c.Param("id")
 		name := c.FormValue("name")
@@ -46,7 +46,7 @@ func main() {
 		posts := &model.Post{Name: name, Description: description}
 		return c.JSON(http.StatusOK, post.UpdateById(storage.DB(), id, *posts))
 	})
-	e.DELETE("/api/v1/:id", func(c echo.Context) error {
+	e.DELETE("/v1/:id", func(c echo.Context) error {
 
 		id := c.Param("id")
 		post.DeleteById(storage.DB(), id)
